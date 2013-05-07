@@ -4,6 +4,17 @@
 	li {
 		cursor: default;
 	}
+	.window {
+    resize: both;
+		border: 2px solid black;
+		height: 10%;
+		width: 20%;
+		min-height: 5%;
+		max-height: 200px;
+		min-width: 15%;
+		max-width: 30%;
+		overflow: hidden;
+	}
 	</style>
   <title>Pusher Test</title>
   <script src="http://js.pusher.com/2.0/pusher.min.js" type="text/javascript"></script>
@@ -14,13 +25,13 @@
 </head>
 
 <body>
-	<input type="text" placeholder="Your Nickname"></textarea>
-	<button>Login</button>
-
+	<div id="users">
+	</div>
+	<div id="chats">
+	</div>
 </body>
   <script type="text/javascript">
 		$(function() {
-			window.chats = {};
 			// Enable pusher logging - don't include this in production
 	    Pusher.log = function(message) {
 	      if (window.console && window.console.log) window.console.log(message);
@@ -30,95 +41,31 @@
 	    WEB_SOCKET_DEBUG = true;
 
 	    var pusher = new Pusher('59f43f1f5867e554bcfb');
-			var render = function(){
-				_(window.chats).each(function(value, key){
-					var el = $('<div id=' + key + '></div>');
-					el.append('<h1>' + key + '</h1>')
-					var ul = $('<ul><ul>')
-					_(value).each(function(message){
-					  ul.append($('<li>' + message + '</li>'))
-					});
-					el.append(ul);
-					var input = $("<input type='text' placeholder='enter message'></input>");
-					el.append(input);
-					if ( $('#' + key).length == 0 ) {
-	          $('body').append(el)
-					} else {
-	          $('#' + key).html(el.html())
-					}
-					$('input').keypress(function(e){
-						sendMessage(e, key);
-					})
 
-				});
-			};
-
-			var startChat = function(event, user){
-				if (window.chats[user.info.name]) {
-
-				} else {
-          window.chats[user.info.name] = [];
-					render();
+      CA.onlineUsers = pusher.subscribe('presence-online')
+			CA.onlineUsers.bind('pusher:subscription_succeeded', function(members){
+				CA.users = members;
+				CA.usersView.render();
+			});
+			CA.onlineUsers.bind('pusher:member_added', function(member) {
+			  CA.usersView.render();
+			});
+			CA.onlineUsers.bind('pusher:member_removed', function(member) {
+			  CA.usersView.render();
+			});
+			CA.onlineUsers.bind('client-receive_message', function(data) {
+				if ( data['target'] == CA.users.me.info.name ) {
+					var user = data['user'];
+					var message = data['message'];
+					CA.chats[user] ? '' : CA.chats[user] = [] ;
+				  CA.chats[user].push(user + ': ' + message);
+	        CA.chatsView.render();
 				}
-      };
-
-      var sendMessage = function(event, targetUser) {
-				console.log(targetUser)
-        if (event.which == 13) {
-					window.onlineUsers.trigger('client-receive_message', {target: targetUser , user: window.users.me.info.name, message: event.target.value })
-					window.chats[targetUser].push(window.users.me.info.name + ': ' + event.target.value);
-					event.target.value = '';
-					render();
-        }
-      };
+			});
 
 
-			var usersRender = function() {
-				var el = $("<div id='users'></div>");
-				var ul = $('<ul>Online users: </ul>');
-				window.users.each(function(user){
-					var name = user.info.name;
-					if ( name != window.users.me.info.name ) {
-					var li = $("<li>" + name + "</li>")
-	          li.dblclick(function(event){
-	          	startChat(event, user);
-	          });
-						ul.append(li);
-					}
-				});
-				el.append(ul);
-				if ( $('#users').length == 0 ) {
-          $('body').append(el)
-				} else {
-          $('#users').html(el.html())
-				}
-			};
-
-      $('button').on("click", function(){
-        onlineUsers = pusher.subscribe('presence-online')
-				onlineUsers.bind('pusher:subscription_succeeded', function(members){
-					window.users = members;
-					$('input').remove();
-					$('button').remove();
-					usersRender();
-				});
-				onlineUsers.bind('pusher:member_added', function(member) {
-				  usersRender();
-				});
-				onlineUsers.bind('pusher:member_removed', function(member) {
-				  usersRender();
-				});
-				onlineUsers.bind('client-receive_message', function(data) {
-					console.log("receive message triggered!")
-					if ( data['target'] == window.users.me.info.name ) {
-						var user = data['user'];
-						var message = data['message'];
-						window.chats[user] ? '' : window.chats[user] = [] ;
-					  window.chats[user].push(user + ': ' + message);
-		        render();
-					}
-				});
-			})
+			CA.chatsView = new CA.Views.ChatsView({el: $('#chats')})
+			CA.usersView = new CA.Views.UsersView({el: $('#users')})
 		});
   </script>
 

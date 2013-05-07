@@ -24,6 +24,7 @@ end
 gem 'ejs'
 gem 'figaro'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'underscore-rails'
 gem 'backbone-rails'
 gem 'addressable'

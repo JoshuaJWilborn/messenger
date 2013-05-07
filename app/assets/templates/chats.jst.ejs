@@ -1,6 +1,5 @@
-<div class="chats">
-
-	<% _(window.chats).each(function(value, key){ %>
+<div class="window">
+	<% _(CA.chats).each(function(value, key){ %>
 	  <% console.log(value) %>
 		<div id='<%= key %>' class='chatwindow'>
 			<h1><%= key %></h1>
@@ -13,5 +12,4 @@
 			</input>
 		</div>
 	<% }); %>
-
 </div>

@@ -1,6 +1,5 @@
 CA.Views.ChatsView = Backbone.View.extend({
 
-
 	events: {
 		"keyup input": 'sendMessage'
   },
@@ -17,8 +16,13 @@ CA.Views.ChatsView = Backbone.View.extend({
 		console.log("keypress sendmessage")
 		targetUser = event.target.attributes['data-target'].value
 	  if (event.which == 13) {
-			window.onlineUsers.trigger('client-receive_message', {target: targetUser , user: window.users.me.info.name, message: event.target.value })
-			window.chats[targetUser].push(window.users.me.info.name + ': ' + event.target.value);
+			CA.onlineUsers.trigger(
+													 		'client-receive_message',
+															{target: targetUser,
+															 user: CA.users.me.info.name,
+															 message: event.target.value }
+														 )
+			CA.chats[targetUser].push(CA.users.me.info.name + ': ' + event.target.value);
 			event.target.value = '';
 			this.render();
 	  }
@@ -28,12 +32,3 @@ CA.Views.ChatsView = Backbone.View.extend({
 		console.log('clicked')
 	}
 });
-
-var startChat = function(event, user){
-	if (window.chats[user.info.name]) {
-
-	} else {
-    window.chats[user.info.name] = [];
-	}
-};
-

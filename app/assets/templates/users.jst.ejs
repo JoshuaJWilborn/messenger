@@ -1,0 +1,10 @@
+<div class="window">
+	<ul>Online users:
+		<% CA.users.each(function(user){ %>
+			<% var name = user.info.name; %>
+			<% if ( name != CA.users.me.info.name ) { %>
+				<li><%= name %></li>
+			<% } %>
+		<% }); %>
+	</ul>
+</div>

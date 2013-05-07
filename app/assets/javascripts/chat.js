@@ -1,3 +1,4 @@
 window.CA = {
-	Views : {}
+	Views : {},
+	chats: {}
 }
