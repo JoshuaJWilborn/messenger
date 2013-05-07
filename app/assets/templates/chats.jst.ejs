@@ -1,0 +1,17 @@
+<div class="chats">
+
+	<% _(window.chats).each(function(value, key){ %>
+	  <% console.log(value) %>
+		<div id='<%= key %>' class='chatwindow'>
+			<h1><%= key %></h1>
+			<ul>
+				<% _(value).each(function(message){ %>
+				  <li><%= message %></li>
+				<% }); %>
+			</ul>
+			<input type='text' placeholder='enter message' data-target='<%= key %>'>
+			</input>
+		</div>
+	<% }); %>
+
+</div>

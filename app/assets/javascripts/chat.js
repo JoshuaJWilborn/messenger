@@ -1,0 +1,3 @@
+window.CA = {
+	Views : {}
+}

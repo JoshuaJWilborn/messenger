@@ -39,16 +39,17 @@
 					  ul.append($('<li>' + message + '</li>'))
 					});
 					el.append(ul);
-					var input = $("<input type='text' placeholder='enter message'></input>")
-					input.keypress(function(e){
-						sendMessage(e, key)
-					})
+					var input = $("<input type='text' placeholder='enter message'></input>");
 					el.append(input);
 					if ( $('#' + key).length == 0 ) {
 	          $('body').append(el)
 					} else {
 	          $('#' + key).html(el.html())
 					}
+					$('input').keypress(function(e){
+						sendMessage(e, key);
+					})
+
 				});
 			};
 
