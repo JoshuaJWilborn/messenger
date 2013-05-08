@@ -1,4 +1,5 @@
 window.CA = {
 	Views : {},
-	chats: {}
+	chats: {},
+	chatViews: {}
 }

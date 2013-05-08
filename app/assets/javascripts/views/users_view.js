@@ -7,6 +7,7 @@ CA.Views.UsersView = Backbone.View.extend({
     var that = this;
 		var renderedContent = JST["users"]()
     that.$el.html(renderedContent);
+		that.$el.draggable();
 		return that;
   },
 

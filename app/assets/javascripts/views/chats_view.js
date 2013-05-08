@@ -7,13 +7,14 @@ CA.Views.ChatsView = Backbone.View.extend({
 	render: function(){
     var that = this;
 		var renderedContent = JST["chats"]()
-    that.$el.html(renderedContent);
+		that.$el.html(renderedContent);
+		that.$el.draggable()
 		return that;
+
 	},
 
 	sendMessage: function(event) {
 		var that = this;
-		console.log("keypress sendmessage")
 		targetUser = event.target.attributes['data-target'].value
 	  if (event.which == 13) {
 			CA.onlineUsers.trigger(
@@ -26,9 +27,5 @@ CA.Views.ChatsView = Backbone.View.extend({
 			event.target.value = '';
 			this.render();
 	  }
-	},
-
-	log: function() {
-		console.log('clicked')
 	}
 });

@@ -1,5 +1,7 @@
-<div class="window">
-	<% _(CA.chats).each(function(value, key){ %>
+<div>
+<% _(CA.chats).each(function(value, key){ %>
+	<div class="box">
+	<%= JST['toolbar']() %>
 	  <% console.log(value) %>
 		<div id='<%= key %>' class='chatwindow'>
 			<h1><%= key %></h1>
@@ -11,5 +13,6 @@
 			<input type='text' placeholder='enter message' data-target='<%= key %>'>
 			</input>
 		</div>
-	<% }); %>
+	</div>
+<% }); %>
 </div>
