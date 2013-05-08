@@ -1,18 +1,15 @@
 <div>
-<% _(CA.chats).each(function(value, key){ %>
 	<div class="box">
-	<%= JST['toolbar']() %>
-	  <% console.log(value) %>
-		<div id='<%= key %>' class='chatwindow'>
-			<h1><%= key %></h1>
+	<%= JST['toolbar']({name: chatname}) %>
+
+		<div id='<%= chatname %>' class='chatwindow'>
 			<ul>
-				<% _(value).each(function(message){ %>
+				<% _(CA.chats[chatname]).each(function(message){ %>
 				  <li><%= message %></li>
 				<% }); %>
 			</ul>
-			<input type='text' placeholder='enter message' data-target='<%= key %>'>
+			<input type='text' placeholder='enter message' data-target='<%= chatname %>'>
 			</input>
 		</div>
 	</div>
-<% }); %>
 </div>

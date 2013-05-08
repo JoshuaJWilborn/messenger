@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <head>
 	<style>
+	input {
+		width: 95%;
+		border-radius: 10px;
+	}
+
 	li {
 		cursor: default;
+	}
+
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
 	}
 
 	.toolbar div {
@@ -36,6 +47,10 @@
 		height: 1000px;
 	}
 
+	.chats {
+		height: 100%;
+	}
+
 	.container {
 		overflow: hidden;
 		max-width:100%;
@@ -46,9 +61,32 @@
 		height: 100%;
 	}
 
+	.smallbox {
+    float: left;
+		border: 2px solid black;
+		height: 30px;
+		width: 20%;
+		min-height: 5%;
+		min-width: 15%;
+		max-width: 30%;
+		overflow: hidden;
+		background-color: turquoise;
+		border-radius: 10px;
+	}
+
+	.bigbox {
+		position: absolute;
+    float: left;
+		border: 2px solid black;
+		height: 800px;
+		width: 99%;
+		overflow: hidden;
+		background-color: turquoise;
+		border-radius: 10px;
+	}
+
 	.box {
     float: left;
-    resize: both;
 		border: 2px solid black;
 		height: 10%;
 		width: 20%;
@@ -57,6 +95,7 @@
 		max-width: 30%;
 		overflow: hidden;
 		background-color: turquoise;
+		border-radius: 10px;
 	}
 	</style>
   <title>Pusher Test</title>
