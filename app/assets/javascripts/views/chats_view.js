@@ -4,10 +4,10 @@ CA.Views.ChatsView = Backbone.View.extend({
     var that = this;
 		_(CA.chats).each(function(value, key){
       if ( CA.chatViews[key] ) {
-        CA.chatViews[key].render()
+        CA.chatViews[key].render();
       } else {
-        CA.chatViews[key] = new CA.Views.ChatView({chat: CA.chats[key], chatname: key})
-        that.$el.append(CA.chatViews[key].render().el)
+        CA.chatViews[key] = new CA.Views.ChatView({chat: CA.chats[key], chatname: key});
+        that.$el.append(CA.chatViews[key].render().el);
 			}
 		})
 		return that;

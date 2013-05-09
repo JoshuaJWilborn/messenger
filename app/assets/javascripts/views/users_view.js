@@ -2,7 +2,7 @@ CA.Views.UsersView = Backbone.View.extend({
 
   events: {
     "dblclick ul": 'startChat',
-		"click .close": 'close',
+		"click .close": 'remove',
 		"click .maximize": 'maximize',
 		"click .minimize": 'minimize'
   },
@@ -16,30 +16,42 @@ CA.Views.UsersView = Backbone.View.extend({
 
 	startChat: function(event){
 		var that = this;
-		if (CA.chats[$(event.target).text()]) {
-		} else {
-      CA.chats[$(event.target).text()] = [];
+		var name = $(event.target).text();
+		if (!CA.chats[name]) {
+      CA.chats[name] = {messages: [], targets: [name]};
       CA.chatsView.render();
 		}
   },
 
-	close: function(event){
-		this.remove();
-	},
-
 	maximize: function(event){
-		console.log("click")
-    parent = $(event.target).parent().parent().parent()[0];
-		console.log(parent)
-		console.log(parent.className)
-		parent.className === "box" ? parent.className = "bigbox" : parent.className = "box";
+		var $parent = this.getParent(event);
+		this.toggleClass($parent, "bigbox", "smallbox");
 	},
 
 	minimize: function(event){
-		console.log("click")
-    parent = $(event.target).parent().parent().parent()[0];
-		console.log(parent)
-		console.log(parent.className)
-		parent.className === "box" ? parent.className = "smallbox" : parent.className = "box";
+	  var $parent = this.getParent(event);
+		this.toggleClass($parent, "smallbox", "bigbox");
+		if ( $(event.target).parents('#minimize-bar').length == 0 ) {
+			$('#minimize-bar').append(this.$el);
+			this.$el.attr('style', null);
+		} else {
+			$('body').append(this.$el);
+			this.$el.attr('style', "position: relative")
+		}
+
+	},
+
+	toggleClass: function($el, classA, classB) {
+		if ( $el.hasClass(classA) ) {
+      $el.removeClass(classA)
+		} else {
+      $el.addClass(classA)
+			$el.removeClass(classB)
+		}
+	},
+
+	getParent: function(event) {
+		var $el = $(event.target);
+		return $parent = $el.parents('.parentwindow');
 	}
 })

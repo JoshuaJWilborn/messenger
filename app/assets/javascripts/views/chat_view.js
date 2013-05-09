@@ -9,47 +9,74 @@ CA.Views.ChatView = Backbone.View.extend({
 
 	render: function(){
     var that = this;
-		var renderedContent = JST["chats"]({chat: that.options.chat, chatname: that.options.chatname})
+		var renderedContent = JST["chats"]({
+			chat: that.options.chat,
+			chatname: that.options.chatname
+		});
+		var oldClass = that.$el.find('.parentwindow').attr('class');
 		that.$el.html(renderedContent);
-		that.$el.draggable()
+		that.$el.draggable({
+			cancel: "input, textarea, .parentwindow ul"
+		})
+		that.$el.droppable({
+			tolerance: "touch",
+			drop: function(event, ui) {
+        console.log("dropped")
+			},
+			deactivate: function(event, ui) {
+				console.log("no longer dragging")
+			}
+		})
+		if (oldClass) {
+			that.$el.find('.parentwindow').attr('class', oldClass)
+		}
 		return that;
 	},
-
+	//break this off into a chat model
 	sendMessage: function(event) {
-		var that = this;
-		targetUser = event.target.attributes['data-target'].value
-	  if (event.which == 13) {
-			CA.onlineUsers.trigger(
-													 		'client-receive_message',
-															{target: targetUser,
-															 user: CA.users.me.info.name,
-															 message: event.target.value }
-														 )
-			CA.chats[targetUser].push(CA.users.me.info.name + ': ' + event.target.value);
-			event.target.value = '';
-			this.render();
-	  }
+		var chat = new CA.Models.Chat;
+		chat.sendMessage(event,
+			this.options.chat,
+  		this.options.chatname,
+			this.render.bind(this)
+		)
 	},
 
 	close: function(event){
 		delete CA.chatViews[this.options.chatname];
-		delete CA.chats[this.options.chatname]
+		delete CA.chats[this.options.chatname];
 		this.remove();
 	},
 
 	maximize: function(event){
-		console.log("click")
-    parent = $(event.target).parent().parent().parent()[0];
-		console.log(parent)
-		console.log(parent.className)
-		parent.className === "box" ? parent.className = "bigbox" : parent.className = "box";
+		var $parent = this.getParent(event);
+		this.toggleClass($parent, "bigbox", "smallbox");
 	},
 
 	minimize: function(event){
-		console.log("click")
-    parent = $(event.target).parent().parent().parent()[0];
-		console.log(parent)
-		console.log(parent.className)
-		parent.className === "box" ? parent.className = "smallbox" : parent.className = "box";
+	  var $parent = this.getParent(event);
+		this.toggleClass($parent, "smallbox", "bigbox");
+		if ( $(event.target).parents('#minimize-bar').length == 0 ) {
+			$('#minimize-bar').append(this.$el);
+			this.$el.attr('style', null);
+		} else {
+			$('body').append(this.$el);
+			this.$el.attr('style', "position: relative")
+		}
+
+	},
+
+	toggleClass: function($el, classA, classB) {
+		if ( $el.hasClass(classA) ) {
+      $el.removeClass(classA)
+		} else {
+      $el.addClass(classA)
+			$el.removeClass(classB)
+		}
+	},
+
+	getParent: function(event) {
+		var $el = $(event.target);
+		return $parent = $el.parents('.parentwindow');
 	}
 });

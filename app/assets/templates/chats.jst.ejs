@@ -1,14 +1,16 @@
 <div>
-	<div class="box">
+	<div class="window share windows-vis parentwindow">
 	<%= JST['toolbar']({name: chatname}) %>
 
 		<div id='<%= chatname %>' class='chatwindow'>
+			<div style="margin: 5px; padding: 2px">
 			<ul>
-				<% _(CA.chats[chatname]).each(function(message){ %>
+				<% _(CA.chats[chatname]['messages']).each(function(message){ %>
 				  <li><%= message %></li>
 				<% }); %>
 			</ul>
-			<input type='text' placeholder='enter message' data-target='<%= chatname %>'>
+			</div>
+			<input id="<%= chatname %>-input" type='text' placeholder='enter message' data-target='<%= chatname %>'>
 			</input>
 		</div>
 	</div>

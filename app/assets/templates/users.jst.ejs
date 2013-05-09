@@ -1,5 +1,8 @@
-<div class="box">
+
+<div class="window share windows-vis parentwindow" id="users">
   <%= JST['toolbar']({name: chatname}) %>
+	<div class="container" style="width: 100%">
+	<div class="container-inside">
 	<ul>
 		<% CA.users.each(function(user){ %>
 			<% var name = user.info.name; %>
@@ -8,4 +11,6 @@
 			<% } %>
 		<% }); %>
 	</ul>
+	</div>
+	</div>
 </div>

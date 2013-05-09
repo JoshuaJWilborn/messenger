@@ -5,4 +5,8 @@ class ChatController < ApplicationController
 
 	end
 
+  def show
+		render :test
+
+	end
 end
