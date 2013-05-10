@@ -4,7 +4,8 @@ CA.Views.UsersView = Backbone.View.extend({
     "dblclick ul": 'startChat',
 		"click .close": 'remove',
 		"click .maximize": 'maximize',
-		"click .minimize": 'minimize'
+		"click .minimize": 'minimize',
+		'dblclick .titleInside': 'maximize'
   },
 	render: function() {
     var that = this;
@@ -25,6 +26,9 @@ CA.Views.UsersView = Backbone.View.extend({
 
 	maximize: function(event){
 		var $parent = this.getParent(event);
+		if ( $(event.target).parents('#minimize-bar').length != 0) {
+			this.minimize(event);
+		}
 		this.toggleClass($parent, "bigbox", "smallbox");
 	},
 

@@ -18,6 +18,7 @@ window.CA = {
     CA.onlineUsers = pusher.subscribe('presence-online')
 		CA.onlineUsers.bind('pusher:subscription_succeeded', function(members){
 			CA.users = members;
+			$('#floatingBarsG').remove();
 			CA.usersView.render();
 		});
 		CA.onlineUsers.bind('pusher:member_added', function(member) {

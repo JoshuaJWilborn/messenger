@@ -4,7 +4,8 @@ CA.Views.ChatView = Backbone.View.extend({
 		"keyup input": 'sendMessage',
 		"click .close": 'close',
 		"click .maximize": 'maximize',
-		"click .minimize": 'minimize'
+		"click .minimize": 'minimize',
+		'dblclick .titleInside': 'maximize'
   },
 
 	render: function(){
@@ -50,8 +51,12 @@ CA.Views.ChatView = Backbone.View.extend({
 
 	maximize: function(event){
 		var $parent = this.getParent(event);
+		if ( $(event.target).parents('#minimize-bar').length != 0) {
+			this.minimize(event);
+		}
 		this.toggleClass($parent, "bigbox", "smallbox");
 	},
+
 
 	minimize: function(event){
 	  var $parent = this.getParent(event);
@@ -60,7 +65,7 @@ CA.Views.ChatView = Backbone.View.extend({
 			$('#minimize-bar').append(this.$el);
 			this.$el.attr('style', null);
 		} else {
-			$('body').append(this.$el);
+			$('body').find('#chats').append(this.$el);
 			this.$el.attr('style', "position: relative")
 		}
 
