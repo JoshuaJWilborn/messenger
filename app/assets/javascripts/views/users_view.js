@@ -5,7 +5,8 @@ CA.Views.UsersView = Backbone.View.extend({
 		"click .close": 'remove',
 		"click .maximize": 'maximize',
 		"click .minimize": 'minimize',
-		'dblclick .titleInside': 'maximize'
+		'dblclick .titleInside': 'maximize',
+		'click #logout': 'logout'
   },
 	render: function() {
     var that = this;
@@ -57,5 +58,15 @@ CA.Views.UsersView = Backbone.View.extend({
 	getParent: function(event) {
 		var $el = $(event.target);
 		return $parent = $el.parents('.parentwindow');
+	},
+
+	logout: function() {
+		$.ajax({
+		    url: '/users/sign_out',
+		    type: 'DELETE',
+		    success: function(result) {
+					window.location.reload();
+		    }
+		});
 	}
 })

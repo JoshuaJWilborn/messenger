@@ -1,4 +1,14 @@
-<h2>Sign up</h2>
+<div class="window share windows-vis parentwindow">
+<nav class="control-window">
+
+	<a href="#" class="close">close</a>
+	<a href="#" class="maximize">maximize</a>
+  <a href="#" class="minimize">minimize</a>
+</nav>
+<h1 class="titleInside">Sign Up</h1>
+
+<div class="container-inside">
+
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
@@ -19,3 +29,5 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
+</div>

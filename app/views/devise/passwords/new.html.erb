@@ -1,4 +1,14 @@
-<h2>Forgot your password?</h2>
+<div class="window share windows-vis parentwindow">
+<nav class="control-window">
+
+	<a href="#" class="close">close</a>
+	<a href="#" class="maximize">maximize</a>
+  <a href="#" class="minimize">minimize</a>
+</nav>
+<h1 class="titleInside">Forgot your password?</h1>
+
+<div class="container-inside">
+
 
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
@@ -10,3 +20,5 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
+</div>

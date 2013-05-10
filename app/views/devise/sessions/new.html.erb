@@ -1,4 +1,13 @@
-<h2>Sign in</h2>
+<div class="window share windows-vis parentwindow">
+<nav class="control-window">
+
+	<a href="#" class="close">close</a>
+	<a href="#" class="maximize">maximize</a>
+  <a href="#" class="minimize">minimize</a>
+</nav>
+<h1 class="titleInside">Sign In</h1>
+
+<div class="container-inside">
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <div><%= f.label :email %><br />
@@ -15,3 +24,5 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
+</div>
