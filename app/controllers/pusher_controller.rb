@@ -1,12 +1,5 @@
 require 'pusher'
 
-
-Pusher.secret = 'a62fef0db5f70b896705'
-Pusher.app_id = 43408
-Pusher.key = '59f43f1f5867e554bcfb'
-
-
-
 class PusherController < ApplicationController
   protect_from_forgery :except => :auth # stop rails CSRF protection for this action
 
